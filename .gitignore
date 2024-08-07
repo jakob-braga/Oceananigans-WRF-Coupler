@@ -1,0 +1,7 @@
+ocean_output*
+run_coupler.sh
+wrf/wrfinput*
+wrf/wrfrst*
+wrf/wrfout*
+.ipynb_checkpoints/*
+wrf/.ipynb_checkpoints/*
