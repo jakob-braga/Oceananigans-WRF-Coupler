@@ -52,7 +52,7 @@ module OceananigansManager
         ## actual model
         global model = NonhydrostaticModel(;
             grid,
-            #buoyancy,
+            buoyancy,
             advection = UpwindBiasedFifthOrder(),
             timestepper = :RungeKutta3,
             tracers = (:T, :S),
