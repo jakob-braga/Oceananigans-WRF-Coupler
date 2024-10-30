@@ -9,38 +9,49 @@ module WRFManager
     const wrfin_filename = "wrfinput_d01"
     const wrfrst_filename = "wrfrst_d01_0001-01-01_00:00:00"
     const wrfout_filename = "wrfout_d01_0001-01-01_00:00:00"
-    
-    ## dynamic variables, fancy (hacky) way to define a global variable
-    ## so i can use this namespace as a class
-    global const U10 = Ref{Array{Float32, 3}}(zeros((1, 1, 1)))
-    global const V10 = Ref{Array{Float32, 3}}(zeros((1, 1, 1)))
-
 
     ###############################
     ## Managing Shared Variables ##
     ###############################
-    
-    @inline function update_data()
+
+    @inline function get_U10()
         wrf_data = NCDataset(string("./wrf/", wrfrst_filename), "r")
-        global U10[] = wrf_data["U10"][:]
-        global V10[] = wrf_data["V10"][:]
+        tmp_U10 = wrf_data["U10"][:, :, 1]
         close(wrf_data)
+        return tmp_U10
     end
 
-    @inline function u_stress(x, y, t)
-        i = max(1, min(OP.Nx, Int(trunc(x/OP.dx))))
-        j = max(1, min(OP.Ny, Int(trunc(y/OP.dy))))
-        tmp_u10 = U10[][i, j, 1]
-        return -OP.ρₐ/OP.ρₒ*OP.cᴰ*tmp_u10*abs(tmp_u10)
+    @inline function get_V10()
+        wrf_data = NCDataset(string("./wrf/", wrfrst_filename), "r")
+        tmp_V10 = wrf_data["V10"][:, :, 1]
+        close(wrf_data)
+        return tmp_V10
     end
 
-    @inline function v_stress(x, y, t)
-        i = max(1, min(OP.Nx, Int(trunc(x/OP.dx))))
-        j = max(1, min(OP.Ny, Int(trunc(y/OP.dy))))
-        tmp_v10 = V10[][i, j, 1]
-        return -OP.ρₐ/OP.ρₒ*OP.cᴰ*tmp_v10*abs(tmp_v10)
+    @inline function get_UST()
+        wrf_data = NCDataset(string("./wrf/", wrfrst_filename), "r")
+        tmp_UST = wrf_data["UST"][:, :, 1]
+        close(wrf_data)
+        return tmp_UST
     end
 
+    @inline function get_HFX()
+        wrf_data = NCDataset(string("./wrf/", wrfrst_filename), "r")
+        tmp_HFX = wrf_data["HFX"][:, :, 1]
+        close(wrf_data)
+        return tmp_HFX
+    end
+    
+    ## TODO clean this up so its not just returning an array, this should be a struct
+    @inline function get_coupled_vars()
+        wrf_data = NCDataset(string("./wrf/", wrfrst_filename), "r")
+        tmp_U10 = wrf_data["U10"][:, :, 1]
+        tmp_V10 = wrf_data["V10"][:, :, 1]
+        tmp_UST = wrf_data["UST"][:, :, 1]
+        tmp_HFX = wrf_data["HFX"][:, :, 1]
+        close(wrf_data)
+        return (tmp_U10, tmp_V10, tmp_UST, tmp_HFX)
+    end
 
     ################################
     ## editing wrf specific files ##
@@ -140,7 +151,7 @@ module WRFManager
         ## clean up the files
         rename_outputs(_iteration=0)
         ## based off wrfoutput we define the windstress
-        update_data()
+        ## construct surface velocities on the ocean based off the initializations in the parameters config
     end
 
     @inline function run_wrf()

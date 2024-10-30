@@ -1,0 +1,42 @@
+Quilting with   1 groups of   0 I/O tasks.
+ Ntasks in X            2 , ntasks in Y            2
+  Domain # 1: dx =   600.000 m
+WRF V4.3.3 MODEL
+No git found or not a git repository, git commit version not available.
+ *************************************
+ Parent domain
+ ids,ide,jds,jde            1         513           1          65
+ ims,ime,jms,jme           -4         263          -4          39
+ ips,ipe,jps,jpe            1         256           1          32
+ *************************************
+DYNAMICS OPTION: Eulerian Mass Coordinate
+   alloc_space_field: domain            1 ,              369300212  bytes allocated
+ RESTART run: opening wrfrst_d01_0001-01-01_00:00:00 for reading
+   Input data is acceptable to use: wrfrst_d01_0001-01-01_00:00:00
+Timing for processing restart file for domain        1:    3.71354 elapsed seconds
+Max map factor in domain 1 =  0.00. Scale the dt in the model accordingly.
+ Tile Strategy is not specified. Assuming 1D-Y
+WRF TILE   1 IS      1 IE    256 JS      1 JE     32
+WRF NUMBER OF TILES =   1
+d01 0001-01-01_00:00:00  ----------------------------------------
+d01 0001-01-01_00:00:00  W-DAMPING  BEGINS AT W-COURANT NUMBER =    1.000000
+d01 0001-01-01_00:00:00  ----------------------------------------
+Timing for main: time 0001-01-01_00:00:04 on domain   1:    0.87283 elapsed seconds
+Timing for main: time 0001-01-01_00:00:08 on domain   1:    0.83805 elapsed seconds
+Timing for main: time 0001-01-01_00:00:12 on domain   1:    0.83083 elapsed seconds
+Timing for main: time 0001-01-01_00:00:16 on domain   1:    0.81120 elapsed seconds
+Timing for main: time 0001-01-01_00:00:20 on domain   1:    0.81670 elapsed seconds
+Timing for main: time 0001-01-01_00:00:24 on domain   1:    0.82136 elapsed seconds
+Timing for main: time 0001-01-01_00:00:28 on domain   1:    0.84534 elapsed seconds
+Timing for main: time 0001-01-01_00:00:32 on domain   1:    0.83030 elapsed seconds
+Timing for main: time 0001-01-01_00:00:36 on domain   1:    0.82094 elapsed seconds
+Timing for main: time 0001-01-01_00:00:40 on domain   1:    0.80889 elapsed seconds
+Timing for main: time 0001-01-01_00:00:44 on domain   1:    0.83339 elapsed seconds
+Timing for main: time 0001-01-01_00:00:48 on domain   1:    0.82639 elapsed seconds
+Timing for main: time 0001-01-01_00:00:52 on domain   1:    0.81124 elapsed seconds
+Timing for main: time 0001-01-01_00:00:56 on domain   1:    0.82720 elapsed seconds
+Timing for main: time 0001-01-01_00:01:00 on domain   1:    0.82004 elapsed seconds
+Timing for Writing wrfout_d01_0001-01-01_00:01:00 for domain        1:    2.50541 elapsed seconds
+Timing for Writing restart for domain        1:   10.33546 elapsed seconds
+d01 0001-01-01_00:01:00 wrf: SUCCESS COMPLETE WRF
+taskid: 0 hostname: gra1136

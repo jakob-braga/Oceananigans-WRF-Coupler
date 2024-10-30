@@ -1,0 +1,25 @@
+taskid: 1 hostname: gra1136
+ module_io_quilt_old.F        2931 F
+Quilting with   1 groups of   0 I/O tasks.
+ Ntasks in X            2 , ntasks in Y            2
+  Domain # 1: dx =   600.000 m
+WRF V4.3.3 MODEL
+No git found or not a git repository, git commit version not available.
+ *************************************
+ Parent domain
+ ids,ide,jds,jde            1         513           1          65
+ ims,ime,jms,jme          250         518          -4          39
+ ips,ipe,jps,jpe          257         513           1          32
+ *************************************
+DYNAMICS OPTION: Eulerian Mass Coordinate
+   alloc_space_field: domain            1 ,              370665860  bytes allocated
+ RESTART run: opening wrfrst_d01_0001-01-01_00:00:00 for reading
+   Input data is acceptable to use:
+Max map factor in domain 1 =  0.00. Scale the dt in the model accordingly.
+ Tile Strategy is not specified. Assuming 1D-Y
+WRF TILE   1 IS    257 IE    513 JS      1 JE     32
+WRF NUMBER OF TILES =   1
+d01 0001-01-01_00:00:00  ----------------------------------------
+d01 0001-01-01_00:00:00  W-DAMPING  BEGINS AT W-COURANT NUMBER =    1.000000
+d01 0001-01-01_00:00:00  ----------------------------------------
+d01 0001-01-01_00:01:00 wrf: SUCCESS COMPLETE WRF

@@ -9,33 +9,44 @@ module OceananigansManager
     
     import ..OceanParameters as OP
     
-    
+
     global model
     global writer
 
     ###############################
     ## Managing Shared Variables ##
     ###############################
-    function SST()
+    function get_SST()
         return model.tracers.T[1:OP.Nx,1:OP.Ny,OP.Nz]
+    end
+
+    function get_surface_u()
+        return model.velocities.u[:, :, OP.Nz]
+    end
+
+    function get_surface_v()
+        return model.velocities.v[:, :, OP.Nz]
     end
     
     #####################
     ## Model Specifics ##
     #####################
     
-    function construct_model(_u_stress::Function, _v_stress::Function)
+    function construct_model(_u_stress::Function, _v_stress::Function, _surface_flux::Function)
         ## grid
+        #arch = Distributed(CPU())
+        arch = CPU()
         grid = RectilinearGrid(
-        size = (OP.Nx, OP.Ny, OP.Nz),
-        x = (0, OP.Lx),
-        y = (0, OP.Ly),
-        z = (-OP.Lz, 0)
+            arch;
+            size = (OP.Nx, OP.Ny, OP.Nz),
+            x = (0, OP.Lx),
+            y = (0, OP.Ly),
+            z = (-OP.Lz, 0)
         )
 
         ## boundary conditions
         T_bcs = FieldBoundaryConditions(
-            top = FluxBoundaryCondition(OP.top_temperature_flux),
+            top = FluxBoundaryCondition(_surface_flux),
             bottom = GradientBoundaryCondition(OP.bottom_temperature_flux)
         )
         u_bcs = FieldBoundaryConditions(
@@ -46,8 +57,9 @@ module OceananigansManager
         )
 
         ## buoyancy
-        eos = SeawaterPolynomials.TEOS10EquationOfState()
+        eos = LinearEquationOfState(thermal_expansion = 2e-4, haline_contraction = 0.0)
         buoyancy = SeawaterBuoyancy(equation_of_state=eos)
+
 
         ## actual model
         global model = NonhydrostaticModel(;
@@ -62,7 +74,7 @@ module OceananigansManager
         )
 
         ## initial conditions
-        set!(model, u=OP.initial_u, T=OP.initial_temperature)
+        set!(model, u=OP.initial_u, v=OP.initial_v, T=OP.initial_temperature)
     end
 
 
